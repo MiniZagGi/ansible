@@ -1,0 +1,30 @@
+all:
+  vars:
+    ansible_ssh_private_key_file: /home/ansible/.ssh/id_ed25519
+    ansible_ssh_user: ansible
+  hosts:
+    gns3.lab.home:
+    pihole.prod.home:
+    ansible.lab.home:
+  children:
+    monitor:
+      hosts:
+        loki.lab.home:
+    prod:
+      children:
+        monitor:
+    test:
+      hosts:
+        gns3.lab.home:
+        testserver.lab.home:
+    ubuntu:
+      hosts:
+        pihole.prod.home:
+        docky02.lab.home:
+        testserver.lab.home:
+    centos:
+      hosts:
+        ansible.lab.home:
+        loki.lab.home:
+        docky.lab.home:
+        wg02.lab.home:

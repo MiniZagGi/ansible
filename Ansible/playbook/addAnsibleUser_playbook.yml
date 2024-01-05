@@ -1,0 +1,8 @@
+- name: Add ansible user with wheel/sudo group
+  ansible.builtin.user:
+      name: ansible
+      shell: /bin/bash
+      groups: wheel,sudo
+      append: yes
+      password: $6$KMsNuADxRAMpzuH9$RhhUADRIaxLBJBP9XWnGtGLY8MBJohcLDyuNYrlpSqh5eAhyucIY4HDqi5TDqgyQC9el0wMH9S1S6bRXzcMJt0
+      state: present 
