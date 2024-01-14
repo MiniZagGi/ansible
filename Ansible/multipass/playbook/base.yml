@@ -1,0 +1,34 @@
+- name: Configure the servers base configuration
+  become: true
+  hosts: all
+  tasks:
+  - name: Create ansible user
+    user:
+      name: ansible
+      password: "{{ 'ansible' | password_hash('sha512') }}"
+      shell: /bin/bash
+      groups: sudo
+      append: yes
+      state: present
+    when: ansible_distribution == "Ubuntu"
+  - name: Create ansible user
+    user:
+      name: ansible
+      password: "{{ 'ansible' | password_hash('sha512') }}"
+      shell: /bin/bash
+      groups: wheel
+      append: yes
+      state: present
+    when: ansible_distribution == "CentOS"
+  - name: Copy ssh key to ansible user
+    authorized_key:
+      user: ansible
+      state: present
+      key: "{{ lookup('file', '~/.ssh/ansible.pub') }}"
+
+  - name: Install packages
+    ansible.builtin.apt:
+      name: vim git htop tmux
+      state: present
+    when: ansible_distribution == "Ubuntu"
+

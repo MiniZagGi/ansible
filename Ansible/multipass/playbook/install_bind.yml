@@ -1,0 +1,15 @@
+- name:
+  hosts: ns01.lab.home
+  become: true
+
+  tasks:
+  - name:
+    apt:
+      name: bind9
+      state: present
+
+  - name:
+    service:
+      name: bind9
+      state: started
+      enabled: true

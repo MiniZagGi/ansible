@@ -1,0 +1,18 @@
+all:
+  vars:
+    ansible_ssh_private_key_file: /home/ansible/.ssh/ansible
+    ansible_ssh_user: ansible
+  hosts:
+    web01.lab.home:
+    db01.lab.home:
+    ns01.lab.home:
+  children:
+    webserver:
+      hosts:
+        web02.lab.home:
+    dbserver:
+      hosts:
+        db02.lab.home:
+    dnsserver:
+      hosts:
+        ns01.lab.home:
