@@ -1,0 +1,71 @@
+- name: Apply base config to switch
+  hosts: cisco_sw01
+  tasks:
+  - name: Configure hostname
+    cisco.ios.ios_hostname:
+      config:
+        hostname: SW01
+      state: merged
+
+  - name: Configure domain name
+    cisco.ios.ios_domain_name:
+      config:
+        domain_name: lab.home
+      state: merged
+
+  - name: no ip domain-lookup
+    cisco.ios.ios_ip_domain_lookup:
+      config:
+        enabled: false
+      state: merged
+
+  - name: termail history size
+    cisco.ios.ios_terminal_history_size:
+      config:
+        size: 200
+      state: merged
+
+  - name: Configure NTP
+    cisco.ios.ios_ntp:
+      config:
+        ntp_servers:
+        - address: pool.ntp.org
+          key_id: 1
+          prefer: true
+      state: merged
+
+
+  # - name: Add user cisco with priv 15
+  #   cisco.ios.ios_user:
+  #     config:
+  #       username: cisco
+  #       password: cisco123
+  #       privilege: 15
+  #     state: merged
+
+  # - name: Add user ansible with priv 15
+  #   cisco.ios.ios_user:
+  #     config:
+  #       username: ansible
+  #       password: ansible123
+  #       privilege: 15
+  #     state: merged
+
+  - name: Merge provided configuration with device configuration
+    cisco.ios.ios_vlans:
+      config:
+      - name: Vlan_10
+        vlan_id: 10
+        state: active
+        shutdown: disabled
+      - name: Vlan_20
+        vlan_id: 20
+        #mtu: 610
+        state: active
+        #shutdown: enabled
+      #- name: Vlan_30
+      #vlan_id: 30
+      #state: suspend
+      #shutdown: enabled
+      state: merged
+
