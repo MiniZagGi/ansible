@@ -1,0 +1,18 @@
+# code: language=ansible
+- name: Show version
+  hosts: cisco
+  vars:
+    cli:
+      username: admin
+      password: cisco123
+      timeout: 60
+
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Show version
+      ios_config:
+        provider: "{{ cli }}"
+        lines:
+          - show version
+      register: print_output
