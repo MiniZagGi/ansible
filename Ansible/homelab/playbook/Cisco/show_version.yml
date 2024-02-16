@@ -7,7 +7,7 @@
       password: cisco123
       timeout: 60
 
-  gather_facts: no
+  gather_facts: false
   connection: network_cli
   tasks:
     - name: Show version
