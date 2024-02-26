@@ -11,3 +11,24 @@
 # Problem with ansible-pylibssh 
 # ERROR: Could not build wheels for ansible-pylibssh, which is required to install pyproject.toml-based projects
 # On Feodra python3-devel and libssh-devel are required. On Ubuntu it's called python3-devel and libssh-dev?
+
+mini@fedora:~$ ansible-playbook show_hostname.yml -i inventory 
+
+PLAY [D1] **********************************************************************************************************************************************************************************************************************************
+
+TASK [Configure hostname] ******************************************************************************************************************************************************************************************************************
+fatal: [D1]: FAILED! => {"changed": false, "msg": "ssh connection failed: ssh connect failed: kex error : no match for method kex algos: server [diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1], client [curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512]"}
+
+PLAY RECAP *********************************************************************************************************************************************************************************************************************************
+D1                         : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+mini@fedora:~$ ansible-playbook show_hostname.yml -i inventory -c ssh
+
+PLAY [D1] **********************************************************************************************************************************************************************************************************************************
+
+TASK [Configure hostname] ******************************************************************************************************************************************************************************************************************
+fatal: [D1]: FAILED! => {"changed": false, "msg": "ssh connection failed: ssh connect failed: kex error : no match for method kex algos: server [diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1], client [curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512]"}
+
+PLAY RECAP *********************************************************************************************************************************************************************************************************************************
+D1                         : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
