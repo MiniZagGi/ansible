@@ -1,8 +1,13 @@
-hosts: D1
-gather_facts: no
-tasks:
-- name: Configure hostname
-  cisco.ios.ios_hostname:
-    config:
-      hostname: SW01
-    state: rendered
+- hosts: D1
+  gather_facts: no
+  tasks:
+  - name: Configure hostname
+    cisco.ios.ios_hostname:
+      config:
+        hostname: D1
+      state: rendered
+
+# Notes
+# Problem with ansible-pylibssh 
+# ERROR: Could not build wheels for ansible-pylibssh, which is required to install pyproject.toml-based projects
+# On Feodra python3-devel and libssh-devel are required. On Ubuntu it's called python3-devel and libssh-dev?
