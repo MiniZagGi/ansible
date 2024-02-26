@@ -1,5 +1,6 @@
 - name: Apply base config to switch
   hosts: cisco_sw01
+  gather_facts: no
   tasks:
   - name: Configure hostname
     cisco.ios.ios_hostname:
