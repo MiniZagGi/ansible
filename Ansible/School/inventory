@@ -1,15 +1,24 @@
-[switches]
-D1 ansible_host=192.168.69.2
-D2 ansible_host=192.168.69.3
-A1 ansible_host=192.168.69.4
-A2 ansible_host=192.168.69.5
-[Routers]
-R1 ansible_host=172.16.1.1
-[all:vars]
-ansible_connection: network_cli
-ansible_network_os: ios
-ansible_user: admin
-ansible_password: cisco12345
-ansible_become: true
-ansible_become_method: enable
-ansible_become_password: cisco12345
+all:
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: ios
+    ansible_user: admin
+    ansible_password: cisco12345
+    ansible_become: true
+    ansible_become_method: enable
+    ansible_become_password: cisco12345
+  children:
+    switches:
+      hosts:
+        D1:
+          ansible_host: 192.168.69.2
+        D2:
+          ansible_host: 192.168.69.3
+        A1:
+          ansible_host: 192.168.69.4
+        A2:
+          ansible_host: 192.168.69.5
+    Routers:
+      hosts:
+        R1:
+          ansible_host: 172.16.1.1
