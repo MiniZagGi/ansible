@@ -1,0 +1,10 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Configure hostname
+    cisco.ios.ios_banner:
+      banner: login
+      multiline_delimiter: x
+      text: Fy fy skamme skamme
+      state: present
+

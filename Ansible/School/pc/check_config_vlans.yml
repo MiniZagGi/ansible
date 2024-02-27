@@ -1,0 +1,11 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Check VLANs
+    cisco.ios.ios_facts:
+      available_network_resources: false
+      gather_network_resources: l3_interfaces
+  - name: Print variables
+    ansible.builtin.debug:
+       var: ansible_facts['net_interfaces']
+

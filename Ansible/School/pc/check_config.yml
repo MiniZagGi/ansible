@@ -1,0 +1,12 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Check Interfaces
+    cisco.ios.ios_facts:
+      gather_subset:
+      - interfaces
+  - name: Print variables
+    ansible.builtin.debug:
+      var: ansible_facts['net_interfaces']
+
+
