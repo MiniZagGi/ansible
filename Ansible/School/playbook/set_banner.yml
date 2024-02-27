@@ -1,3 +1,4 @@
+# Checks sets the banner of Cisco switch
 - hosts: all
   gather_facts: no
   tasks:
