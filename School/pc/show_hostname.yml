@@ -1,8 +1,0 @@
-- hosts: D2
-  gather_facts: no
-  tasks:
-  - name: Configure hostname
-    cisco.ios.ios_hostname:
-      config:
-        hostname: D2
-      state: merged
