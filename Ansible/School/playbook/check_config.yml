@@ -1,3 +1,4 @@
+---
 - hosts: all
   gather_facts: no
   tasks:
@@ -19,4 +20,3 @@
       content: "{{ios_facts.stdout}}"
       dest: /home/ansible/ansible/config_output
     delegate_to: localhost
-    
