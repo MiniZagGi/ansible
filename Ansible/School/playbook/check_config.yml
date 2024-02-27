@@ -11,7 +11,7 @@
       path: /home/ansible/ansible/config_output
       owner: ansible
       group: ansible
-      mode: '0640'
+      mode: '0660'
     delegate_to: localhost
 
   - name: Print output to file
