@@ -18,7 +18,7 @@ all:
           ansible_host: 192.168.69.4
         A2:
           ansible_host: 192.168.69.5
-    Routers:
+    routers:
       hosts:
         R1:
           ansible_host: 172.16.1.1
