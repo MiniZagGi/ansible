@@ -1,0 +1,14 @@
+# Gets all the interfaces on a switch and print them to terminal
+# to output to file run the playbook and then > to file
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Check Interfaces
+    cisco.ios.ios_facts:
+      gather_subset:
+      - interfaces
+
+# Prints the resualt to the terminal
+  - name: Print variables
+    ansible.builtin.debug:
+      var: ansible_facts['net_interfaces']
