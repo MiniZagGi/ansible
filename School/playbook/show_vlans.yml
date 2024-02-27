@@ -1,0 +1,21 @@
+- name: Show vlan brief
+  hosts: switches
+  gather_facts: false
+  tasks:
+    - name: Show vlan brief
+      ios_command:
+        commands: 
+          - show vlan brief
+      register: output
+
+    - name: print output
+      debug:
+        var: output.stdout_lines
+
+    - name: Save output to a local file on the control machine
+      local_action:
+        module: copy
+        content: "{{ output.stdout_lines | join('\n') }}"
+        dest: /home/ansible/projects/ansible/out
+      delegate_to: localhost
+      when: output.stdout_lines | length > 0
