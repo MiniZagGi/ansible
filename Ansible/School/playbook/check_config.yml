@@ -5,9 +5,7 @@
     cisco.ios.ios_facts:
       gather_subset:
       - interfaces
-  - name: Print variables
-    ansible.builtin.debug:
-      var: ansible_facts
+    register: ios_facts
   - name: Create your local file on master node
     ansible.builtin.file:
       path: /home/ansible/ansible/config_output
@@ -18,7 +16,7 @@
 
   - name: Print output to file
     ansible.builtin.copy:
-      content: "{{command_output.stdout}}"
-      dest: /home/ansible/ansible/config_output 
+      content: "{{ios_facts.stdout}}"
+      dest: /home/ansible/ansible/config_output
     delegate_to: localhost
     
