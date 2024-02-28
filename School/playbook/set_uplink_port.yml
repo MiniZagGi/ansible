@@ -1,11 +1,28 @@
 # Kig efter uplink beskrivelse på port
-- name: find description
-  gather_facts: yes
-  hosts: all
+---
+- name: Check and Configure Interface
+  hosts: D1
+  gather_facts: no
+  connection: network_cli
   tasks:
-    - name: test variables 
-      debug:
-        var: ansible_net_gather_subset
+    - name: Gather interface information
+      ios_command:
+        commands:
+          - show interfaces | include ^[0-9]
+      register: interface_output
+
+    - name: Check if interface has "uplink" in description
+      set_fact:
+        target_interface: "{{ interface_output.stdout_lines | select('regex', 'uplink') | first }}"
+
+    - name: Apply configuration if "uplink" found
+      ios_interface:
+        name: "{{ target_interface.split(' ')[0] }}"
+        description: Your_Description
+        mode: trunk
+        state: present
+      when: target_interface is defined
+
 
 # Ansible bruger "when" til at udføre en konfig ændring
 # Ansible sætter porten i trunk
