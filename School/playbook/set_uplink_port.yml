@@ -5,7 +5,7 @@
   gather_facts: no
   tasks:
     - name: Gather interface information
-      ios_command:
+      cisco.iso.ios_command:
         commands:
           - show interfaces | include ^[0-9]
       register: interface_output
