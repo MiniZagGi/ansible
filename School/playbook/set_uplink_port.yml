@@ -1,9 +1,8 @@
 # Kig efter uplink beskrivelse på port
 ---
 - name: Check and Configure Interface
-  hosts: D1
+  hosts: A1
   gather_facts: no
-  connection: network_cli
   tasks:
     - name: Gather interface information
       ios_command:
@@ -11,17 +10,18 @@
           - show interfaces | include ^[0-9]
       register: interface_output
 
-    - name: Check if interface has "uplink" in description
+    - name: Check if interface has uplink in description
       set_fact:
         target_interface: "{{ interface_output.stdout_lines | select('regex', 'uplink') | first }}"
 
-    - name: Apply configuration if "uplink" found
-      ios_interface:
-        name: "{{ target_interface.split(' ')[0] }}"
-        description: UPLINK
-        mode: trunk
-        state: present
-      when: target_interface is defined
+    - name: Apply configuration if uplink found
+      cisco.ios.ios_interface:
+        config:
+          - name: "{{ target_interface.split(' ')[0] }}"
+            description: UPLINK
+            mode: trunk
+            state: present
+        when: target_interface is defined
 
 
 # Ansible bruger "when" til at udføre en konfig ændring
