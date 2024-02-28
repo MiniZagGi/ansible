@@ -1,0 +1,26 @@
+---
+- name: "CM Lab"
+  hosts: D1
+  gather_facts: no
+
+  tasks:
+    - name: Interfaces status
+      cisco.ios.ios_interfaces:
+        config:
+        - name: "{{ item.name }}"
+          description: "{{ item.description }}"
+          enabled: "{{ item.enabled }}"
+        state: merged
+      with_items: "{{ interfaces }}"
+      
+
+    - name: L3 Interfaces
+      cisco.ios.ios_l3_interfaces:
+        config:
+        - name: "{{ item.name }}"
+          ipv4:
+          - address: "{{ item.ip  }} {{ item.mask  }}"
+        state: merged
+      when: item.ip is defined
+      with_items: "{{ interfaces }}"
+      
