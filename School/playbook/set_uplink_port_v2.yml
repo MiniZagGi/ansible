@@ -1,0 +1,14 @@
+# Kig efter uplink beskrivelse på port
+---
+- name: Check and Configure Interface
+  hosts: A1
+  gather_facts: no
+  tasks:
+    - name: Gather Interface facts and set trunk
+      cisco.ios.ios_interfaces:
+        config:
+        state: gathered
+      #  register: result
+    - name: Print Result  
+      debug:
+       var: result
