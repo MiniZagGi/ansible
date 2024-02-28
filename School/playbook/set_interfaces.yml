@@ -4,17 +4,17 @@
   gather_facts: no
 
   tasks:
-    # - name: Interfaces
-    #   cisco.ios.ios_interfaces:
-    #     config:
-    #     - name: "{{ item.name }}"
-    #       description: "{{ item.description }}"
-    #       enabled: "{{ item.enabled }}"
+    - name: Interfaces
+      cisco.ios.ios_interfaces:
+        config:
+        - name: "{{ item.name }}"
+          description: "{{ item.description }}"
+          enabled: "{{ item.enabled }}"
         
-    #     state: merged
+        state: merged
         
-    #   with_items: "{{ interfaces }}"
-    #   register: inta
+      with_items: "{{ interfaces }}"
+      register: inta
       
 
     - name: L3 Interfaces

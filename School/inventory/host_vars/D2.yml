@@ -1,0 +1,49 @@
+# D2
+hostname: D2
+domain_name: lab.home
+
+interfaces:
+- name: GigabitEthernet1/0/1
+  no_switchport: true
+  ip: 172.16.1.6
+  mask: 255.255.255.252
+  enabled: true
+
+- name: vlan30
+  description: LAN30
+  ip: 10.10.30.1
+  mask: 255.255.255.0
+  enabled: true
+
+- name: vlan40
+  description: LAN40
+  ip: 10.10.40.1
+  mask: 255.255.255.0
+  enabled: true
+
+- name: port-channel1
+  description: uplink to R1
+  mode: trunk
+
+etherchannel:
+- name: port-channel1
+  description: uplink to R1
+  channel_group: 1
+  mode: active
+  enabled: true
+
+ospf:
+  router_id: 3.3.3.3
+  networks:
+  - name: "Network1"
+    address: 172.16.1.4
+    wildcard_mask: 0.0.0.3
+    area: 0
+  - name: "Network2"
+    address: 10.10.30.0
+    wildcard_mask: 0.0.0.255
+    area: 0
+  - name: "Network3"
+    address: 10.10.40.0
+    wildcard_mask: 0.0.0.255
+    area: 0

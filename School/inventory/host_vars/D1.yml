@@ -15,13 +15,35 @@ interfaces:
     ip: 10.10.10.1
     mask: 255.255.255.0
     enabled: true
-  # - name: vlan20
-  #   description: LAN20
-  #   ip: 10.10.20.1
-  #   mask: 255.255.255.0
-  #   enabled: true
-  # - name: vlan78
-  #   description: LAN78
-  #   ip: 10.10.78.1
-  #   mask: 255.255.255.0
-  #   enabled: true
+  - name: vlan20
+    description: LAN20
+    ip: 10.10.20.1
+    mask: 255.255.255.0
+    enabled: true
+  - name: vlan78
+    description: LAN78
+    ip: 10.10.78.1
+    mask: 255.255.255.0
+    enabled: true
+  - name: GigabitEthernet0/0
+    ip: 192.168.69.2
+    mask: 255.255.255.0
+    enabled: true
+    description: ManagementInterface
+
+ospf:
+  - name: "OSPFArea0"
+    router_id: 2.2.2.2
+    networks:
+      - name: "Network1"
+        address: 172.16.1.0
+        wildcard_mask: 0.0.0.3
+        area: 0
+      - name: "Network2"
+        address: 10.10.10.0
+        wildcard_mask: 0.0.0.255
+        area: 0
+      - name: "Network3"
+        address: 10.10.20.0
+        wildcard_mask: 0.0.0.255
+        area: 0

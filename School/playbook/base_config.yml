@@ -1,0 +1,87 @@
+---
+- name: "Basic config from host files"
+  hosts: D1
+  gather_facts: no
+
+  tasks:
+    - name: Set hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: "{{ hostname }}"
+      register: hostname_changed
+
+    - name: Disable IP domain lookup
+      cisco.ios.ios_command:
+        commands:
+          - no ip domain lookup
+
+# Configure console line using ios_config module. Writes the configuration to the running-config
+    - name: Configure console line
+      cisco.ios.ios_config:
+        lines:
+          - line con 0
+          - logging synchronous
+          - exec-timeout 0 0
+        state: merged
+
+    - name: Enable IP routing
+      cisco.ios.ios_command:
+        commands:
+          - ip routing
+
+    - name: Configure Interfaces
+      cisco.ios.ios_interfaces:
+        config:
+          - name: "{{ item.name }}"
+            no_switchport: "{{ item.no_switchport | default(false) }}"
+            description: "{{ item.description | default('') }}"
+            mode: "{{ item.mode | default('') }}"
+            ip: "{{ item.ip | default('') }}"
+            mask: "{{ item.mask | default('') }}"
+            enabled: "{{ item.enabled | default(false) }}"
+            state: merged
+        with_items: "{{ interfaces }}"
+        register: inta
+
+    - name: Configure L3 Interfaces
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: "{{ item.name }}"
+            ipv4:
+              address: "{{ item.ip }} {{ item.mask }}"
+            state: merged
+        when: item.ip is defined
+        with_items: "{{ interfaces }}"
+
+
+
+    - name: Configure EtherChannel
+      cisco.ios.ios_lag_interfaces:
+        config:
+          - name: "{{ item.name }}"
+            description: "{{ item.description | default('') }}"
+            channel_group: "{{ item.channel_group | default('') }}"
+            mode: "{{ item.mode | default('') }}"
+            enabled: "{{ item.enabled | default(false) }}"
+            state: merged
+        with_items: "{{ etherchannel }}"
+      when: item.channel_group is defined
+
+    - name: Configure OSPF
+      cisco.ios.ios_ospfv2:
+        config:
+          router_id: "{{ ospf.router_id }}"
+          networks: "{{ ospf.networks }}"
+      register: ospf_changed
+
+    - name: Configure IP domain name
+      cisco.ios.ios_command:
+        commands:
+          - ip domain name {{ domain_name }}
+
+# Saves the config changes. Needs to be looked at.
+    - name: Save configuration changes
+      cisco.ios.ios_config_copy:
+        source: running-config
+        destination: startup-config
+      when: hostname_changed.changed or ospf_changed.changed or inta.changed
