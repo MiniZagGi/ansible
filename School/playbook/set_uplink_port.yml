@@ -1,0 +1,11 @@
+# Kig efter uplink beskrivelse på port
+- name: find description
+  gather_facts: yes
+  hosts: all
+  tasks:
+    - name: test variables 
+      debug:
+        var: ansible_net_gather_subset
+
+# Ansible bruger "when" til at udføre en konfig ændring
+# Ansible sætter porten i trunk

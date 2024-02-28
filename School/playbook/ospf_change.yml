@@ -1,0 +1,2 @@
+# Kig efter ændring på interface - status ændres fra up til down.
+# Tag det interface som gik ned og fjern det fra OSPF network process
