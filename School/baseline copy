@@ -72,11 +72,29 @@ network  172.16.1.0 0.0.0.3 area 0
 network 10.10.10.0 0.0.0.255 area 0
 network 10.10.20.0 0.0.0.255 area 0
 exit
-! ip sla 1
-!  udp-jitter 10.10.30.1 5000 source-interface vlan 10
-!     frequency 60
-!     exit
-! ip sla monitor schedule 1 start-time now life forever
+ip domain name lab.home
+interface GigabitEthernet0/0
+ip address 192.168.69.2 255.255.255.0
+no shutdown
+exit
+interface GigabitEthernet0/0
+ip address 192.168.69.2 255.255.255.0
+no shutdown
+exit
+ip domain name lab.home
+crypto key generate rsa modulus 2048
+username admin privilege 15 secret cisco12345
+ip ssh version 2
+Line vty 0 15
+Transport input ssh
+Login local
+Exit
+# exit
+# ! ip sla 1
+# !  udp-jitter 10.10.30.1 5000 source-interface vlan 10
+# !     frequency 60
+# !     exit
+# ! ip sla monitor schedule 1 start-time now life forever
 snmp-server community public RO
 
 ####### D2
