@@ -7,7 +7,7 @@ interfaces:
     ip: 172.16.1.2
     mask: 255.255.255.252
   - name: GigabitEthernet1/0/23
-    description: Downlink-to-A1
+    description: Downlink-to-A1New
     enabled: true
     mode: trunk
   - name: vlan10
@@ -15,8 +15,13 @@ interfaces:
     ip: 10.10.10.1
     mask: 255.255.255.0
     enabled: true
-  - name: vlan20
-    description: LAN20
-    ip: 10.10.20.1
-    mask: 255.255.255.0
-    enabled: true
+  # - name: vlan20
+  #   description: LAN20
+  #   ip: 10.10.20.1
+  #   mask: 255.255.255.0
+  #   enabled: true
+  # - name: vlan78
+  #   description: LAN78
+  #   ip: 10.10.78.1
+  #   mask: 255.255.255.0
+  #   enabled: true

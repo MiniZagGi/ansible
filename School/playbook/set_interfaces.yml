@@ -1,17 +1,20 @@
 ---
-- name: "CM Lab"
+- name: "Basic config from host files"
   hosts: D1
   gather_facts: no
 
   tasks:
-    - name: Interfaces status
-      cisco.ios.ios_interfaces:
-        config:
-        - name: "{{ item.name }}"
-          description: "{{ item.description }}"
-          enabled: "{{ item.enabled }}"
-        state: merged
-      with_items: "{{ interfaces }}"
+    # - name: Interfaces
+    #   cisco.ios.ios_interfaces:
+    #     config:
+    #     - name: "{{ item.name }}"
+    #       description: "{{ item.description }}"
+    #       enabled: "{{ item.enabled }}"
+        
+    #     state: merged
+        
+    #   with_items: "{{ interfaces }}"
+    #   register: inta
       
 
     - name: L3 Interfaces
@@ -23,4 +26,8 @@
         state: merged
       when: item.ip is defined
       with_items: "{{ interfaces }}"
-      
+      register: L3
+
+    - name: Print L3
+      ansible.builtin.debug:
+        var: L3['return']
