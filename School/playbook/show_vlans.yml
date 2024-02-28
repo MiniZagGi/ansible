@@ -15,7 +15,10 @@
     - name: Save output to a local file on the control machine
       local_action:
         module: copy
-        content: "{{ output.stdout_lines | join('\n') }}"
+        content: "{{ output.stdout_lines }}"
         dest: /home/ansible/projects/ansible/out
       delegate_to: localhost
       when: output.stdout_lines | length > 0
+      
+# Does not append the output from each node. Only the last node is written to file
+# Use the node name for files.  Each node gets it's own file.
