@@ -18,7 +18,7 @@
     - name: Apply configuration if "uplink" found
       ios_interface:
         name: "{{ target_interface.split(' ')[0] }}"
-        description: Your_Description
+        description: UPLINK
         mode: trunk
         state: present
       when: target_interface is defined
