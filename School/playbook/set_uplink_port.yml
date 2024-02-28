@@ -15,7 +15,7 @@
         target_interface: "{{ interface_output.stdout_lines | select('regex', 'uplink') | first }}"
 
     - name: Apply configuration if uplink found
-      cisco.ios.ios_interface:
+      cisco.ios.ios_interfaces:
         config:
           - name: "{{ target_interface.split(' ')[0] }}"
             description: UPLINK
