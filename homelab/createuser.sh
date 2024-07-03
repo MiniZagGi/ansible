@@ -1,7 +1,7 @@
 #! /bin/bash 
 sudoUser='ansible'
-pass='Pa$$w0rd' 
+pass='drfyguyi' 
 
 # For Ubuntu
-useradd -m $sudoUser --groups sudo
-echo "$pass" | passwd --stdin $sudoUser
+useradd -s /bin/bash -m -G sudo ansible
+echo "$sudoUser:$pass" | sudo chpasswd
